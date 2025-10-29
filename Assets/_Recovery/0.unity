@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 118421521}
   - component: {fileID: 118421520}
   - component: {fileID: 118421519}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1667,12 +1667,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   speed: 5
-  jumpForce: 6
-  groundCheck: {fileID: 764775467}
-  groundCheckRadius: 0.07
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!61 &332155319
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1816,8 +1810,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.03318221, y: 0.03318221, z: 0.03318221}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 764775467}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &332155323
@@ -2783,7 +2776,7 @@ GameObject:
   - component: {fileID: 590042940}
   - component: {fileID: 590042939}
   - component: {fileID: 590042938}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3207,7 +3200,7 @@ GameObject:
   - component: {fileID: 634769481}
   - component: {fileID: 634769480}
   - component: {fileID: 634769479}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3366,7 +3359,7 @@ GameObject:
   - component: {fileID: 639385672}
   - component: {fileID: 639385671}
   - component: {fileID: 639385673}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -4881,7 +4874,7 @@ GameObject:
   - component: {fileID: 670969029}
   - component: {fileID: 670969028}
   - component: {fileID: 670969027}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5389,37 +5382,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &764775466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 764775467}
-  m_Layer: 0
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &764775467
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764775466}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9, y: -14.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 332155322}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &771788728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5612,7 +5574,7 @@ GameObject:
   - component: {fileID: 821060435}
   - component: {fileID: 821060434}
   - component: {fileID: 821060433}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5772,7 +5734,7 @@ GameObject:
   - component: {fileID: 840606350}
   - component: {fileID: 840606349}
   - component: {fileID: 840606352}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5932,7 +5894,7 @@ GameObject:
   - component: {fileID: 844230034}
   - component: {fileID: 844230033}
   - component: {fileID: 844230032}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9050,7 +9012,7 @@ GameObject:
   - component: {fileID: 1402279389}
   - component: {fileID: 1402279388}
   - component: {fileID: 1402279387}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9480,7 +9442,7 @@ GameObject:
   - component: {fileID: 1578448286}
   - component: {fileID: 1578448285}
   - component: {fileID: 1578448284}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10180,7 +10142,7 @@ GameObject:
   - component: {fileID: 1715395436}
   - component: {fileID: 1715395435}
   - component: {fileID: 1715395434}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10657,7 +10619,7 @@ GameObject:
   - component: {fileID: 1855305653}
   - component: {fileID: 1855305652}
   - component: {fileID: 1855305651}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11715,7 +11677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2103243929}
   - component: {fileID: 2103243928}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: fields._7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11807,7 +11769,7 @@ GameObject:
   - component: {fileID: 2105967769}
   - component: {fileID: 2105967768}
   - component: {fileID: 2105967767}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: forest gr sides_0 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
