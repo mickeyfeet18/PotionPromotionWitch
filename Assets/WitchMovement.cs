@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject gameOverPanel;
 
     private Rigidbody2D rb;
+    private Animator anim;
     private bool isGrounded;
     private float originalScaleX;
 
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         originalScaleX = transform.localScale.x;
 
         if (winPanel) winPanel.SetActive(false);
@@ -41,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
                 img.color = new Color(1, 1, 1, 0);
             slots.Add(newSlot);
         }
+         
+       
     }
 
     private void Update()
@@ -57,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
+        anim.SetBool("run", moveInput != 0);
+        anim.SetBool("grounded", isGrounded);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -83,12 +89,24 @@ public class PlayerMovement : MonoBehaviour
                 AddItemToInventory(sprite);
                 Destroy(collision.gameObject);
                 Debug.Log("Collected: " + collision.name);
+                if (collectedItems == 5 )
+                {
+                    winPanel.SetActive(true);
+                    Invoke(nameof(RestartGame), 2f);
+                }
             }
         }
 
         if (collision.CompareTag("BadItem"))
         {
             TriggerGameOver();
+            Destroy(collision.gameObject);
+            Debug.Log("Touched bad item! Game Over triggered.");
+        }
+
+        if (collision.CompareTag("FinalItem"))
+        {
+            Triggerwinpanel();
             Destroy(collision.gameObject);
             Debug.Log("Touched bad item! Game Over triggered.");
         }
@@ -104,20 +122,27 @@ public class PlayerMovement : MonoBehaviour
                 img.sprite = itemSprite;
                 img.color = Color.white;
                 collectedItems++;
+                Debug.Log(collectedItems);
                 break;
             }
         }
 
-        if (collectedItems >= totalSlots && winPanel)
-        {
-            winPanel.SetActive(true);
-        }
+       
     }
 
     private void TriggerGameOver()
     {
         if (gameOverPanel)
             gameOverPanel.SetActive(true);
+
+        // Restart the game after 2 seconds
+        Invoke(nameof(RestartGame), 2f);
+    }
+
+    private void Triggerwinpanel()
+    {
+        if (winPanel)
+            winPanel.SetActive(true);
 
         // Restart the game after 2 seconds
         Invoke(nameof(RestartGame), 2f);
