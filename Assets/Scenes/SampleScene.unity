@@ -1666,13 +1666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aba39d5c5c0dee4c97a63cb6ca3de2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 5
+  moveSpeed: 5
   jumpForce: 6
-  groundCheck: {fileID: 764775467}
-  groundCheckRadius: 0.07
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  inventoryPanel: {fileID: 0}
+  itemSlotPrefab: {fileID: 0}
+  totalSlots: 12
+  winPanel: {fileID: 0}
+  gameOverPanel: {fileID: 0}
 --- !u!61 &332155319
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1734,7 +1734,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0.4
+  m_GravityScale: 0.8
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

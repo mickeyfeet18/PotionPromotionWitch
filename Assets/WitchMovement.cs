@@ -1,58 +1,147 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement; // <-- Add this
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 7f;
-    [SerializeField] private Transform groundCheck;        // Leeg object onderaan speler
-    [SerializeField] private float groundCheckRadius = 0.2f;
-    [SerializeField] private LayerMask groundLayer;        // Layer voor grond
+    [Header("Movement")]
+    [SerializeField] public float moveSpeed = 5f;
+    [SerializeField] public float jumpForce = 6f;
 
-    private Rigidbody2D body;
-    private Animator anim;
-    private float originalScaleX;
+    [Header("Inventory UI")]
+    public Transform inventoryPanel;
+    public GameObject itemSlotPrefab;
+    [SerializeField] public int totalSlots = 12;
+
+    [Header("Game Panels")]
+    public GameObject winPanel;
+    public GameObject gameOverPanel;
+
+    private Rigidbody2D rb;
     private bool isGrounded;
+    private float originalScaleX;
 
-    private void Awake()
+    private List<GameObject> slots = new List<GameObject>();
+    private int collectedItems = 0;
+
+    private void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         originalScaleX = transform.localScale.x;
+
+        if (winPanel) winPanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+
+        for (int i = 0; i < totalSlots; i++)
+        {
+            GameObject newSlot = Instantiate(itemSlotPrefab, inventoryPanel);
+            Image img = newSlot.GetComponent<Image>();
+            if (img != null)
+                img.color = new Color(1, 1, 1, 0);
+            slots.Add(newSlot);
+        }
     }
 
     private void Update()
     {
-        // --- BEWEGING ---
-        float horizontalInput = Input.GetAxis("Horizontal");
-        body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocityY);
+        float moveInput = Input.GetAxis("Horizontal");
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        // Spiegelen afhankelijk van bewegingsrichting, behoud originele schaal
-        if (horizontalInput > 0.01f)
+        if (moveInput > 0)
             transform.localScale = new Vector3(Mathf.Abs(originalScaleX), transform.localScale.y, transform.localScale.z);
-        else if (horizontalInput < -0.01f)
+        else if (moveInput < 0)
             transform.localScale = new Vector3(-Mathf.Abs(originalScaleX), transform.localScale.y, transform.localScale.z);
 
-        // --- GRONDCHECK ---
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        // --- SPRINGEN ---
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            body.linearVelocity = new Vector2(body.linearVelocityX, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
-
-        // --- ANIMATIE ---
-        anim.SetBool("run", horizontalInput != 0);
-        anim.SetBool("grounded", isGrounded);
     }
 
-    // Laat de ground check zien in de Scene view (handig voor debuggen)
-    private void OnDrawGizmosSelected()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (groundCheck != null)
+        if (collision.collider.CompareTag("Ground"))
+            isGrounded = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+            isGrounded = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Touched: " + collision.name + " | Tag: " + collision.tag);
+
+        if (collision.CompareTag("Collectible"))
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Sprite sprite = collision.GetComponent<SpriteRenderer>()?.sprite;
+            if (sprite != null)
+            {
+                AddItemToInventory(sprite);
+                Destroy(collision.gameObject);
+                Debug.Log("Collected: " + collision.name);
+            }
         }
+
+        if (collision.CompareTag("BadItem"))
+        {
+            TriggerGameOver();
+            Destroy(collision.gameObject);
+            Debug.Log("Touched bad item! Game Over triggered.");
+        }
+    }
+
+    private void AddItemToInventory(Sprite itemSprite)
+    {
+        foreach (GameObject slot in slots)
+        {
+            Image img = slot.GetComponent<Image>();
+            if (img != null && img.color.a == 0)
+            {
+                img.sprite = itemSprite;
+                img.color = Color.white;
+                collectedItems++;
+                break;
+            }
+        }
+
+        if (collectedItems >= totalSlots && winPanel)
+        {
+            winPanel.SetActive(true);
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        if (gameOverPanel)
+            gameOverPanel.SetActive(true);
+
+        // Restart the game after 2 seconds
+        Invoke(nameof(RestartGame), 2f);
+    }
+
+    private void RestartGame()
+    {
+        // Reloads the active scene completely
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ResetInventory()
+    {
+        foreach (GameObject slot in slots)
+        {
+            Image img = slot.GetComponent<Image>();
+            if (img != null)
+            {
+                img.sprite = null;
+                img.color = new Color(1, 1, 1, 0);
+            }
+        }
+        collectedItems = 0;
+        if (winPanel) winPanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
     }
 }
